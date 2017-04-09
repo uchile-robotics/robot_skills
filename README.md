@@ -2,12 +2,9 @@
 
 ## Overview
 
-Este package es la interfaz ROS del workspace `base_ws`. Su misión es proveer una interfaz mediente el concepto de *robot_skill* para todos los packages del workspace.
+This package manages the ROS interface to the robot low and mid level software. It is written in python and its goal is to simplify the robot usage when writting states or behaviours. Each software piece should have a `robot_skill` module implementing the `RobotSkill` class.
 
-Además, contiene los archivos `.launch` para lanzar nodos del workspace.
-
-Este package depende de todos los packages del workspace, por lo que puede ser utilizado en los `package.xml` de alto nivel, para obtener indirectamente todas las dependencias de bajo nivel.
-
+It aims to be robot independent.
 
 ## Arquitectura
 
