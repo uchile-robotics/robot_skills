@@ -42,14 +42,15 @@ if "ROBOT" not in os.environ:
     import sys
     sys.exit(1)
 
-if os.environ["ROBOT"] == "bender":
+robot = os.environ["ROBOT"]
+if robot == "bender":
     from bender_skills import robot_factory as _robot_factory
-elif os.environ["ROBOT"] == "maqui":
+elif robot == "maqui":
     from maqui_skills import robot_factory as _robot_factory
 else:
-    print "ROBOT env variable is set to an unknown robot: {}".format(os.environ["ROBOT"])
+    print "ROBOT env variable is set to an unknown robot: {}".format(robot)
     import sys
-    sys.exit(1)    
+    sys.exit(1)
 
 
 def colored_header(text):

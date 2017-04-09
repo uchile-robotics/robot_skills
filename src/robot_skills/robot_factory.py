@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+import rospy
 from robot import Robot
 from robot_skill import RobotSkill
 
@@ -8,6 +10,20 @@ from termcolor import cprint
 import inspect
 import importlib
 import pkgutil
+
+
+# bender dependencies
+if "ROBOT" not in os.environ:
+    print "ROBOT env variable is not defined!"
+    import sys
+    sys.exit(1)
+
+robot = os.environ["ROBOT"]
+if robot not in ["bender", "maqui"]:
+    print "ROBOT env variable is set to an unknown robot: {}".format(robot)
+    import sys
+    sys.exit(1)
+
 
 def onerror(name):
     cprint("Error importing module {}!!".format(name), "red", "on_white")
@@ -60,3 +76,46 @@ def get_skill_dict(packages=list()):
                 cprint(msg, "red", "on_white")
             skill_dict.update({skill_class._type : skill_class})
     return skill_dict
+
+def build_robot(skills, check=True, setup=True):
+    """
+    Build a robot object based on a skill list. By default build
+    a robot using all core skills.
+
+    Args:
+        skills (list of str): Skill list.
+
+    Raises:
+        TypeError: If `skills` is not a list.
+    """
+    rospy.loginfo("factory: building robot ... ")
+    robot = Robot("bender")
+
+    # Check arg
+    if not isinstance(skills, list):
+        raise TypeError("skills must be a string list")
+
+    # Add skill instance to robot    
+    for skill_name in skills:
+        if skill_name in _str_to_skill:
+            robot.set(_str_to_skill[skill_name].get_instance())
+            # Skills shortcuts
+            if skill_name == 'tts':
+                robot.say = robot.tts.say
+        else:
+            rospy.logerr("Skill '{0}' is not registered".format(skill_name))
+
+    rospy.loginfo("factory: the robot is built")
+    # Robot check
+    if check:
+        if not robot.check():
+            raise RuntimeError("Required skills don't available")
+    # Robot setup
+    if setup:
+        if not robot.setup():
+            raise RuntimeError("Robot setup failed")
+    # Return robot
+    return robot
+
+
+_str_to_skill = get_skill_dict(['robot_skills', robot + '_skills'])
