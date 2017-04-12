@@ -77,35 +77,75 @@ def get_skill_dict(packages=list()):
             skill_dict.update({skill_class._type : skill_class})
     return skill_dict
 
-def build_robot(skills, check=True, setup=True):
+
+def build_robot(skills, robot_name, autodeps=True, check=True, setup=True):
     """
     Build a robot object based on a skill list. By default build
     a robot using all core skills.
 
     Args:
         skills (list of str): Skill list.
+        autodeps: whether to lookup skill dependencies when building the robot
+        check: performs a robot.check() call
+        setup: performs a robot.setup() call
 
     Raises:
         TypeError: If `skills` is not a list.
+        RuntimeError: If check or setup steps failed.
     """
     rospy.loginfo("factory: building robot ... ")
-    robot = Robot("bender")
+    robot = Robot(robot_name)
 
-    # Check arg
+    # check arg
     if not isinstance(skills, list):
         raise TypeError("skills must be a string list")
 
-    # Add skill instance to robot    
-    for skill_name in skills:
-        if skill_name in _str_to_skill:
-            robot.set(_str_to_skill[skill_name].get_instance())
-            # Skills shortcuts
-            if skill_name == 'tts':
-                robot.say = robot.tts.say
-        else:
+
+    # handle autodeps
+    skills_to_apply = set()
+    if not autodeps:
+        skills_to_apply = set(skills)
+    else:
+        # expand skills
+        expanded = set()
+        def expand_skill_deps(skill_name):
+            if skill_name in expanded:
+                return
+
+            expanded.add(skill_name)
+            if skill_name in _str_to_skill:
+                skill = _str_to_skill[skill_name].get_instance()
+                for dep in skill.get_dependencies():
+                    expand_skill_deps(dep)
+
+        for skill_name in skills:
+            expand_skill_deps(skill_name)
+        skills_to_apply = expanded
+    rospy.loginfo("factory: setting skills: {}".format(list(skills_to_apply)))
+
+
+    # warn about unknown skills
+    failed = False
+    for skill_name in skills_to_apply:
+        if skill_name not in _str_to_skill:
             rospy.logerr("Skill '{0}' is not registered".format(skill_name))
+            failed = True
+    if failed:
+        raise RuntimeError("There are unknown skills in the required list")
+
+
+    # Add skill instance to robot    
+    for skill_name in skills_to_apply:
+        skill = _str_to_skill[skill_name].get_instance()
+        robot.set(skill)
+
+        # skills shortcuts
+        if skill_name == 'tts':
+            robot.say = robot.tts.say
+         
 
     rospy.loginfo("factory: the robot is built")
+
     # Robot check
     if check:
         if not robot.check():
@@ -119,3 +159,4 @@ def build_robot(skills, check=True, setup=True):
 
 
 _str_to_skill = get_skill_dict(['robot_skills', robot + '_skills'])
+print _str_to_skill
