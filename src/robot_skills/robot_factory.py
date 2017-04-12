@@ -80,9 +80,8 @@ def get_skill_dict(packages=list()):
 
 def build_robot(skills, robot_name, autodeps=True, check=True, setup=True):
     """
-    Build a robot object based on a skill list. By default build
-    a robot using all core skills.
-
+    Build a robot object based on a skill list.
+    
     Args:
         skills (list of str): Skill list.
         autodeps: whether to lookup skill dependencies when building the robot
