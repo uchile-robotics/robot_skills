@@ -107,7 +107,7 @@ if __name__ == '__main__':
             requested_high_level_skills = len(high_skills.intersection(set(_selected_skills))) > 0
 
             if not requested_high_level_skills:
-                robot = _robot_factory.build(_selected_skills)
+                robot = _robot_factory.build(_selected_skills, core=False)
             else:
                 print_warning("... sorry, at the moment i am only enabled to setup core skills.")
                 raise DocoptExit("")
