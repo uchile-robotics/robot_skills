@@ -157,5 +157,5 @@ def build_robot(skills, robot_name, autodeps=True, check=True, setup=True):
     return robot
 
 
-_str_to_skill = get_skill_dict(['robot_skills', robot + '_skills'])
+_str_to_skill = get_skill_dict(['uchile_skills', robot + '_skills'])
 print _str_to_skill

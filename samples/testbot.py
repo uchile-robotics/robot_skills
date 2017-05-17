@@ -5,8 +5,8 @@ __author__ = 'Matías Pavez'
 __email__  = 'matias.pavez@ing.uchile.cl'
 
 import rospy
-from robot_skills.robot import Robot
-from robot_skills.util.test_skill import TestSkill
+from uchile_skills.robot import Robot
+from uchile_skills.util.test_skill import TestSkill
 
 if __name__ == "__main__":
 

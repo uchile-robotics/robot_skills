@@ -1,4 +1,4 @@
-# robot_skills
+# uchile_skills
 
 ## Overview
 
@@ -12,11 +12,11 @@ It aims to be robot independent.
 
 ### Clase `robot`
 
-Documentado en el mismo archivo: `src/robot_skills/robot.py`
+Documentado en el mismo archivo: `src/uchile_skills/robot.py`
 
 ### Clase `robot_skill`
 
-Documentado en el mismo archivo: `src/robot_skills/robot_skill.py`
+Documentado en el mismo archivo: `src/uchile_skills/robot_skill.py`
 
 
 ## Creando nuevos skills
@@ -25,13 +25,13 @@ Cada skill debe heredar de la clase `RobotSkill` e implementar al menos los mét
 
 Además de los métodos obligatorios, se espera que cada implementador agrege más funcionalidades a la clase. Por ejemplo, se espera que la HeadSkill provea una función cómo `head.set_emotion("happy")`.
 
-En la carpeta `src/robot_skills/core/` se presentan implementaciones de cada componente del core. Se recomienda utilizarlas como base para programar nuevas funcionalidades.
+En la carpeta `src/uchile_skills/core/` se presentan implementaciones de cada componente del core. Se recomienda utilizarlas como base para programar nuevas funcionalidades.
 
 
 ## Ejemplos
 
-La carpeta `robot_skills/samples` contiene nodos de ROS con ejemplos de diversas versiones de un robot, construido a partir de los skills de ejemplo. Pueden ser ejecutados con los siguientes comandos: 
+La carpeta `uchile_skills/samples` contiene nodos de ROS con ejemplos de diversas versiones de un robot, construido a partir de los skills de ejemplo. Pueden ser ejecutados con los siguientes comandos: 
 
 ```bash
-rosrun robot_skills testbot.py
+rosrun uchile_skills testbot.py
 ```

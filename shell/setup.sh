@@ -2,8 +2,8 @@
 
 robot-console () {
     #depcheck ipython
-    PKG_DIR=$(rospack find robot_skills)
-    #ROBOT_PARTS_DIR=$(rospack find robot_skills)/src/robot_skills
+    PKG_DIR=$(rospack find uchile_skills)
+    #ROBOT_PARTS_DIR=$(rospack find uchile_skills)/src/uchile_skills
     echo -e "launching robot console...\n"
     ipython -i --no-banner --no-confirm-exit --autocall 2 "${PKG_DIR}/shell/console.py" -- "$@"
 }
@@ -25,11 +25,11 @@ _robotcomplete_robot-console()
 
     opts="-h --help --only"
 
-    # get list of core skills from the robot_skills package
-    PKG_DIR="$(rospack find robot_skills)"
+    # get list of core skills from the uchile_skills package
+    PKG_DIR="$(rospack find uchile_skills)"
     rskills=
-    if [ -d "$PKG_DIR"/src/robot_skills/core ]; then
-        cd "$PKG_DIR"/src/robot_skills/core
+    if [ -d "$PKG_DIR"/src/uchile_skills/core ]; then
+        cd "$PKG_DIR"/src/uchile_skills/core
         rskills="$(find . -maxdepth 3 -type f -regex ".*.py" ! -name '__init__.py'  -printf '%f\n' | sed 's/.py//g')"
     fi
 

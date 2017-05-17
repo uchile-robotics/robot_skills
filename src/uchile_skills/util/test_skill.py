@@ -3,7 +3,7 @@
 
 import rospy
 
-from robot_skills.robot_skill import RobotSkill
+from uchile_skills.robot_skill import RobotSkill
 
 
 class TestSkill(RobotSkill):

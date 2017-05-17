@@ -17,10 +17,10 @@
     <!-- PACKAGE INFORMATION -->
     <!-- - - - - - - - - - - -->
 
-    <name>robot_skills</name>
+    <name>uchile_skills</name>
     <version>2.0.0</version>
     
-    <description>The robot_skills package</description>
+    <description>The uchile_skills package</description>
 
     <!-- team -->
     <maintainer email="bender.devel@gmail.com">
@@ -33,8 +33,8 @@
 
     <!-- about and related repository -->
     <url type="website">http://robotica-uchile.amtc.cl/</url>
-    <url type="bugtracker">https://github.com/uchile-robotics/robot_skills/issues</url>
-    <url type="repository">https://github.com/uchile-robotics/robot_skills</url>
+    <url type="bugtracker">https://github.com/uchile-robotics/uchile_skills/issues</url>
+    <url type="repository">https://github.com/uchile-robotics/uchile_skills</url>
 
     <license>TODO</license>
 
