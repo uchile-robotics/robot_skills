@@ -1,4 +1,4 @@
-# robot_skills
+# robot_skills [deprecated]
 
 ## Overview
 
